@@ -22,9 +22,9 @@ extern uint8_t is_master;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 3
+#define _LOWER 3
+#define _RAISE 4
+#define _ADJUST 16
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -37,6 +37,26 @@ enum custom_keycodes {
 
 enum macro_keycodes {
   KC_SAMPLEMACRO,
+};
+
+enum unicode_names {
+  AAU,
+  AAL,
+  AEU,
+  AEL,
+  OEU,
+  OEL,
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+  [AAU]  = 0x00C5,
+  [AAL] =  0x00E5,
+
+  [AEU]  = 0x00C4,
+  [AEL] =  0x00E4,
+
+  [OEU]  = 0x00D6,
+  [OEL] =  0x00F6,
 };
 
 #define KC______ KC_TRNS
@@ -60,49 +80,49 @@ enum macro_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,  BSPC,\
+        ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
+       LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  LALT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
                               //`--------------------'  `--------------------'
   ),
 
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,  BSPC,\
+      GRAVE,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,    F8,    F9,   F10, XXXXX,\
+      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LBRC, XXXXX,  XXXXX, MINS,   EQL, RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,   F11,   F12,   F13,   F14,   F15,                    F16,   F17,   F18,   F19,   F20, XXXXX,\
+       LSFT,   F1,   F2,      F3,    F4,    F5,                     F6,    F7,     F8,   F9,   F10, LALT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
                               //`--------------------'  `--------------------'
   ),
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  ASTR,  LPRN,  RPRN,  BSPC,\
+        ESC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  LPRN, XXXXX,    UP,  MINS,  EQL, RPRN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   MINS,   EQL,  LCBR,  RCBR,  PIPE,   GRV,\
+      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  LBRC,  LEFT,  DOWN,  RIGHT,  XXXXX, RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   UNDS,  PLUS,  LBRC,  RBRC,  BSLS,  TILD,\
+       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  XXXXX,  XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
                               //`--------------------'  `--------------------'
   ),
 
-  [_ADJUST] = LAYOUT_kc( \
+  [_ADJUST] = LAYOUT( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+        KC_RST,  KC_LRST, KC_NO, KC_NO, KC_NO, KC_NO,                  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       KC_LTOG,  KC_LHUI,  KC_LSAI,  KC_LVAI, KC_NO, KC_NO,                  KC_NO, KC_NO,  KC_NO, XP(AAL, AAU), XP(AEL, AEU), XP(OEL, OEU),\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       KC_LMOD,  KC_LHUD,  KC_LSAD,  KC_LVAD, KC_NO, KC_NO,                  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, LOWER,   SPC,      ENT, RAISE, ALTKN \
+                                  KC_LOWER, KC_GUIEI,  KC_BSPC,      KC_ENT, KC_SPC, KC_RAISE  \
                               //`--------------------'  `--------------------'
   )
 };
@@ -147,6 +167,10 @@ const char *read_keylogs(void);
 // const char *read_host_led_state(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
+
+void eeconfig_init_user(void) {
+  set_unicode_input_mode(UC_OSX);
+}
 
 void matrix_scan_user(void) {
    iota_gfx_task();
