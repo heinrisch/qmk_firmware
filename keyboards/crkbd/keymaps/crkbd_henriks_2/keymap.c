@@ -65,10 +65,11 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC______ KC_TRNS
 #define KC_XOX   KC_TRNS
 #define KC_XXXXX KC_NO
-#define KC_LOWER LOWER
-#define KC_RAISE RAISE
-#define KC_SWEDISH SWEDISH
 #define KC_XP    XP
+#define KC_TG    TG
+#define KC_MO    MO
+#define KC_TO    TO
+#define KC_HYPP  HYPR
 #define KC_RST   RESET
 #define KC_LRST  RGBRST
 #define KC_LTOG  RGB_TOG
@@ -92,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  LALT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
+                                MO(_LOWER), GUIEI,  BSPC,   ENT, SPC, MO(_RAISE)  \
                               //`--------------------'  `--------------------'
   ),
 
@@ -102,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,  XP(AEL,AEU),XP(OEL,OEU),\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX,SWEDISH,\
+       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX, TO(_QWERTY),\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                    XOX,   XOX,   XOX,     XOX,   XOX,   XOX \
                               //`--------------------'  `--------------------'
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,     F8,   F9,   F10,  LALT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                 XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
+                                 XOX,   XOX,   XOX,     XOX,   XOX,   MO(_ADJUST)  \
                               //`--------------------'  `--------------------'
   ),
 
@@ -128,17 +129,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,   XOX,   XOX,   XOX,   XOX,   XOX,                   LABK,  XOX,   XOX,   XOX,   XOX,   RABK,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                 XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
+                                 MO(_ADJUST),   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
   ),
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST,    NO,    NO,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,    NO,\
+        RST,  LRST,    NO,    NO,    NO,    NO,                     NO,    NO, HYPP(KC_UP),    NO,    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,    NO,\
+       LTOG,  LHUI,  LSAI,  LVAI,    NO,    NO,             HYPP(KC_F),HYPP(KC_LEFT),HYPP(KC_DOWN),HYPP(KC_RIGHT),    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LMOD,  LHUD,  LSAD,  LVAD,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,SWEDISH,\
+       LMOD,  LHUD,  LSAD,  LVAD,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,TG(_SWEDISH),\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                  XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
