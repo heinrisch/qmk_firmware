@@ -89,7 +89,7 @@ const uint32_t PROGMEM unicode_map[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,BSLASH,\
+  GRAVE_ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
