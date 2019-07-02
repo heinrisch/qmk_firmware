@@ -23,15 +23,17 @@ extern uint8_t is_master;
 // entirely and just use numbers.
 
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 3
+#define _SWEDISH 1
+#define _LOWER 2
+#define _RAISE 3
+#define _ADJUST 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
+  SWEDISH,
   BACKLIT,
   RGBRST
 };
@@ -61,9 +63,12 @@ const uint32_t PROGMEM unicode_map[] = {
 };
 
 #define KC______ KC_TRNS
+#define KC_XOX   KC_TRNS
 #define KC_XXXXX KC_NO
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
+#define KC_SWEDISH SWEDISH
+#define KC_XP    XP
 #define KC_RST   RESET
 #define KC_LRST  RGBRST
 #define KC_LTOG  RGB_TOG
@@ -91,39 +96,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               //`--------------------'  `--------------------'
   ),
 
+  [_SWEDISH] = LAYOUT_kc( \
+  //,-----------------------------------------.                ,-----------------------------------------.
+       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX,XP(AAL,AAU),\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,  XP(AEL,AEU),XP(OEL,OEU),\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX,SWEDISH,\
+  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
+                                   XOX,   XOX,   XOX,     XOX,   XOX,   XOX \
+                              //`--------------------'  `--------------------'
+  ),
+
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
       GRAVE,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LBRC, XXXXX,  XXXXX, MINS,   EQL, RBRC,\
+      CTLTB,   XOX,   XOX,   XOX,   XOX,   XOX,                   LBRC,   XOX,   XOX,  MINS,   EQL,  RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,   F1,   F2,      F3,    F4,    F5,                     F6,    F7,     F8,   F9,   F10, LALT,\
+       LSFT,    F1,    F2,    F3,    F4,    F5,                     F6,    F7,     F8,   F9,   F10,  LALT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
+                                 XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
   ),
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  LPRN, XXXXX,    UP,  MINS,  EQL, RPRN,\
+        ESC,   XOX,   XOX,   XOX,   XOX,   XOX,                 LPRN,   XOX,   UP,  MINS,  EQL, RPRN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  LBRC,  LEFT,  DOWN,  RIGHT,  XXXXX, RBRC,\
+      CTLTB,   XOX,   XOX,   XOX,   XOX,   XOX,                  LBRC,  LEFT,  DOWN, RIGHT,   XOX,RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX,  XXXXX,  XXXXX, XXXXX,\
+       LSFT,   XOX,   XOX,   XOX,   XOX,   XOX,                   LABK,  XOX,   XOX,   XOX,   XOX,   RABK,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  LOWER, GUIEI,  BSPC,      ENT, SPC, RAISE  \
+                                 XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
   ),
 
-  [_ADJUST] = LAYOUT( \
+  [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        KC_RST,  KC_LRST, KC_NO, KC_NO, KC_NO, KC_NO,                  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,\
+        RST,  LRST,    NO,    NO,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       KC_LTOG,  KC_LHUI,  KC_LSAI,  KC_LVAI, KC_NO, KC_NO,                  KC_NO, KC_NO,  KC_NO, XP(AAL, AAU), XP(AEL, AEU), XP(OEL, OEU),\
+       LTOG,  LHUI,  LSAI,  LVAI,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       KC_LMOD,  KC_LHUD,  KC_LSAD,  KC_LVAD, KC_NO, KC_NO,                  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LSFT,\
+       LMOD,  LHUD,  LSAD,  LVAD,    NO,    NO,                     NO,    NO,    NO,    NO,    NO,SWEDISH,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  KC_LOWER, KC_GUIEI,  KC_BSPC,      KC_ENT, KC_SPC, KC_RAISE  \
+                                 XOX,   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
   )
 };
@@ -247,6 +264,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_on(_ADJUST);
         } else {
           layer_off(_ADJUST);
+        }
+        return false;
+        break;
+    case SWEDISH:
+        if (record->event.pressed) {
+          if (IS_LAYER_ON(_SWEDISH)) {
+            layer_off(_SWEDISH);
+          } else {
+            layer_on(_SWEDISH);
+          }
         }
         return false;
         break;
