@@ -155,15 +155,6 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-// Setting ADJUST layer RGB back to default
-void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
-  } else {
-    layer_off(layer3);
-  }
-}
-
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
       RGB_current_mode = rgblight_config.mode;
@@ -178,7 +169,6 @@ void matrix_init_user(void) {
 #ifdef SSD1306OLED
 
 // When add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
@@ -198,10 +188,30 @@ void matrix_scan_user(void) {
    iota_gfx_task();
 }
 
+char layer_state_str[24];
+
+const char *read_layer_state2(void) {
+  if(IS_LAYER_ON(_ADJUST)) {
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Adjust");
+  } else if(IS_LAYER_ON(_RAISE)) {
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Raise");
+  } else if(IS_LAYER_ON(_LOWER)) {
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Lower");
+  } else if(IS_LAYER_ON(_SWEDISH)) {
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Swedish");
+  } else if(IS_LAYER_ON(_QWERTY)) {
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Base");
+  } else{
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Unknown");
+  }
+
+  return layer_state_str;
+}
+
 void matrix_render_user(struct CharacterMatrix *matrix) {
   if (is_master) {
     // If you want to change the display of OLED, you need to change here
-    matrix_write_ln(matrix, read_layer_state());
+    matrix_write_ln(matrix, read_layer_state2());
     matrix_write_ln(matrix, read_keylog());
     matrix_write_ln(matrix, read_stroke_count());
     //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
