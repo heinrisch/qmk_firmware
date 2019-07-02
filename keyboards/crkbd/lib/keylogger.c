@@ -4,6 +4,8 @@
 char keylog_str[24] = {};
 char keylogs_str[21] = {};
 int keylogs_str_idx = 0;
+int stroke_count = 0;
+char strokes_string[12] = {};
 
 const char code_to_name[60] = {
     ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -20,9 +22,9 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
   }
 
   // update keylog
-  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
+  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d",
            record->event.key.row, record->event.key.col,
-           keycode, name);
+           keycode);
 
   // update keylogs
   if (keylogs_str_idx == sizeof(keylogs_str) - 1) {
@@ -34,6 +36,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 
   keylogs_str[keylogs_str_idx] = name;
   keylogs_str_idx++;
+  stroke_count++;
 }
 
 const char *read_keylog(void) {
@@ -42,4 +45,9 @@ const char *read_keylog(void) {
 
 const char *read_keylogs(void) {
   return keylogs_str;
+}
+
+const char *read_stroke_count(void) {
+  sprintf(strokes_string,"%d",stroke_count);
+  return strokes_string;
 }

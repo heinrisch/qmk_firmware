@@ -35,7 +35,8 @@ enum custom_keycodes {
   ADJUST,
   SWEDISH,
   BACKLIT,
-  RGBRST
+  RGBRST,
+  SCREENSHOT,
 };
 
 enum macro_keycodes {
@@ -72,6 +73,7 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC_HYPP  HYPR
 #define KC_RST   RESET
 #define KC_LRST  RGBRST
+#define KC_SCREENSHOT SCREENSHOT
 #define KC_LTOG  RGB_TOG
 #define KC_LHUI  RGB_HUI
 #define KC_LHUD  RGB_HUD
@@ -135,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST,    NO,    NO,    NO,    NO,                     NO,    NO, HYPP(KC_UP),    NO,    NO,    NO,\
+        RST,  LRST,    NO,    NO,    NO,    NO,             SCREENSHOT,    NO, HYPP(KC_UP),    NO,    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LTOG,  LHUI,  LSAI,  LVAI,    NO,    NO,             HYPP(KC_F),HYPP(KC_LEFT),HYPP(KC_DOWN),HYPP(KC_RIGHT),    NO,    NO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
@@ -181,6 +183,7 @@ const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
+const char *read_stroke_count(void);
 
 // const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
@@ -200,7 +203,7 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     // If you want to change the display of OLED, you need to change here
     matrix_write_ln(matrix, read_layer_state());
     matrix_write_ln(matrix, read_keylog());
-    matrix_write_ln(matrix, read_keylogs());
+    matrix_write_ln(matrix, read_stroke_count());
     //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
     //matrix_write_ln(matrix, read_host_led_state());
     //matrix_write_ln(matrix, read_timelog());
@@ -234,50 +237,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case ADJUST:
-        if (record->event.pressed) {
-          layer_on(_ADJUST);
-        } else {
-          layer_off(_ADJUST);
-        }
-        return false;
-        break;
-    case SWEDISH:
-        if (record->event.pressed) {
-          if (IS_LAYER_ON(_SWEDISH)) {
-            layer_off(_SWEDISH);
-          } else {
-            layer_on(_SWEDISH);
-          }
-        }
-        return false;
-        break;
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
@@ -296,6 +255,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           RGB_current_mode = rgblight_config.mode;
         }
       #endif
+      break;
+    case SCREENSHOT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_DOWN(X_LGUI)SS_DOWN(X_LCTRL)SS_DOWN(X_LSHIFT)"4"SS_UP(X_LGUI)SS_UP(X_LCTRL)SS_UP(X_LSHIFT));
+      }
+      break;
+    case RESET:
+      if (record->event.pressed) {
+        eeconfig_init();
+      }
       break;
   }
   return true;
