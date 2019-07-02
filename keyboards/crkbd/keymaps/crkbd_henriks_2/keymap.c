@@ -89,7 +89,7 @@ const uint32_t PROGMEM unicode_map[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-  GRAVE_ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,BSLASH,\
+       GESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,BSLASH,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
@@ -238,7 +238,6 @@ void iota_gfx_task_user(void) {
 #endif//SSD1306OLED
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  eeconfig_init();
   if (record->event.pressed) {
 #ifdef SSD1306OLED
     set_keylog(keycode, record);
