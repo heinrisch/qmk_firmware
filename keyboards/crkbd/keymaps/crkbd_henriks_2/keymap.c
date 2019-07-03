@@ -21,7 +21,6 @@ extern uint8_t is_master;
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
-
 #define _QWERTY 0
 #define _SWEDISH 1
 #define _LOWER 2
@@ -175,11 +174,6 @@ const char *read_keylog(void);
 const char *read_keylogs(void);
 const char *read_stroke_count(void);
 
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
 void eeconfig_init_user(void) {
   set_unicode_input_mode(UC_OSX);
 }
@@ -190,19 +184,23 @@ void matrix_scan_user(void) {
 
 char layer_state_str[24];
 
+void set_layer_state_text(char* text) {
+  snprintf(layer_state_str, sizeof(layer_state_str), text);
+}
+
 const char *read_layer_state2(void) {
   if(IS_LAYER_ON(_ADJUST)) {
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Adjust");
+    set_layer_state_text("Layer: Adjust");
   } else if(IS_LAYER_ON(_RAISE)) {
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Raise");
+    set_layer_state_text("Layer: Raise");
   } else if(IS_LAYER_ON(_LOWER)) {
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Lower");
+    set_layer_state_text("Layer: Lower");
   } else if(IS_LAYER_ON(_SWEDISH)) {
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Swedish");
+    set_layer_state_text("Layer: Swedish");
   } else if(IS_LAYER_ON(_QWERTY)) {
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Base");
+    set_layer_state_text("Layer: Base");
   } else{
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Unknown");
+    set_layer_state_text("Layer: Unknown");
   }
 
   return layer_state_str;
@@ -210,13 +208,9 @@ const char *read_layer_state2(void) {
 
 void matrix_render_user(struct CharacterMatrix *matrix) {
   if (is_master) {
-    // If you want to change the display of OLED, you need to change here
     matrix_write_ln(matrix, read_layer_state2());
     matrix_write_ln(matrix, read_keylog());
     matrix_write_ln(matrix, read_stroke_count());
-    //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
-    //matrix_write_ln(matrix, read_host_led_state());
-    //matrix_write_ln(matrix, read_timelog());
   } else {
     matrix_write(matrix, read_logo());
   }
