@@ -169,6 +169,8 @@ void matrix_init_user(void) {
 
 // When add source files to SRC in rules.mk, you can use functions.
 const char *read_logo(void);
+const char *read_dmg(void);
+const char *read_qmk(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
@@ -212,7 +214,13 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     matrix_write_ln(matrix, read_keylog());
     matrix_write_ln(matrix, read_stroke_count());
   } else {
-    matrix_write(matrix, read_logo());
+    if(IS_LAYER_ON(_SWEDISH)) {
+      matrix_write(matrix, read_dmg());
+    } else if(IS_LAYER_ON(_ADJUST) || IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER)) {
+      matrix_write(matrix, read_qmk());
+    } else {
+      matrix_write(matrix, read_logo());
+    }
   }
 }
 
