@@ -47,6 +47,14 @@ const char *read_keylogs(void) {
   return keylogs_str;
 }
 
+const int get_stroke_count(void) {
+  return stroke_count;
+}
+
+void set_stroke_count(int count) {
+  stroke_count = count;
+}
+
 const char *read_stroke_count(void) {
   sprintf(strokes_string,"%d",stroke_count);
   return strokes_string;

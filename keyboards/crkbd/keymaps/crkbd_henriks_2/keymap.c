@@ -85,6 +85,8 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC_GUIEI GUI_T(KC_LANG2)
 #define KC_ALTKN ALT_T(KC_LANG1)
 
+const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {10, 5, 2};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
@@ -149,10 +151,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 int RGB_current_mode;
 
+typedef union {
+  uint32_t raw;
+  struct {
+    int     stroke_count;
+  };
+} user_config_t;
+
+user_config_t user_config;
+
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
 }
+
+void set_stroke_count(int count);
 
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
@@ -161,6 +174,8 @@ void matrix_init_user(void) {
     //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
     #ifdef SSD1306OLED
         iota_gfx_init(!has_usb());   // turns on the display
+        user_config.raw = eeconfig_read_user();
+        set_stroke_count(user_config.stroke_count);
     #endif
 }
 
@@ -172,12 +187,16 @@ const char *read_logo(void);
 const char *read_dmg(void);
 const char *read_qmk(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
+const int get_stroke_count(void);
 const char *read_keylog(void);
 const char *read_keylogs(void);
 const char *read_stroke_count(void);
 
 void eeconfig_init_user(void) {
   set_unicode_input_mode(UC_OSX);
+  user_config.raw = 0;
+  user_config.stroke_count = 0;
+  eeconfig_update_user(user_config.raw);
 }
 
 void matrix_scan_user(void) {
@@ -243,6 +262,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef SSD1306OLED
     set_keylog(keycode, record);
+    int strokes = get_stroke_count();
+    if (strokes % 10 == 0) {
+      user_config.stroke_count = strokes;
+      eeconfig_update_user(user_config.raw);
+    }
 #endif
     // set_timelog();
   }
