@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
        XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX,XP(AAL,AAU),\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,  XP(AEL,AEU),XP(OEL,OEU),\
+       XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX   ,XP(OEL,OEU), XP(AEL,AEU),\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   XOX,   XOX,   XOX,   XOX,   XOX, TO(_QWERTY),\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
@@ -126,9 +126,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   LPRN,   XOX,   UP,   MINS,   EQL,  RPRN,\
+        XOX,   XOX,   XOX,   XOX,   XOX,   XOX,                   LBRC,   XOX,   UP,   MINS,   EQL,  RPRN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-        XOX,   XOX,_VOLUP,  MPLY,   XOX,   XOX,                   LBRC,  LEFT,  DOWN, RIGHT,   XOX,  RBRC,\
+        XOX,   XOX,_VOLUP,  MPLY,   XOX,   XOX,                   LPRN,  LEFT,  DOWN, RIGHT,   XOX,  RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
         XOX,   XOX,_VOLDOWN,_MUTE,  XOX,   XOX,                   LABK,  XOX,   XOX,    XOX,   XOX,  RABK,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
