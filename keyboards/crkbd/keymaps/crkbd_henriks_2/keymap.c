@@ -81,6 +81,7 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
 #define KC_LMOD  RGB_MOD
+#define KC_LCA   LCA
 #define KC_CTLTB CTL_T(KC_TAB)
 #define KC_GUIEI GUI_T(KC_LANG2)
 #define KC_ALTKN ALT_T(KC_LANG1)
@@ -130,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
         XOX,   XOX,_VOLUP,  MPLY,   XOX,   XOX,                   LPRN,  LEFT,  DOWN, RIGHT,   XOX,  RPRN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-        XOX,   XOX,_VOLDOWN,_MUTE,  XOX,   XOX,                   LABK,  XOX,   XOX,    XOX,   XOX,  RABK,\
+        XOX,   XOX,_VOLDOWN,_MUTE,  XOX,   XOX,                   LABK,LCA(KC_LEFT),XOX,LCA(KC_RIGHT),   XOX,  RABK,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                  MO(_ADJUST),   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
