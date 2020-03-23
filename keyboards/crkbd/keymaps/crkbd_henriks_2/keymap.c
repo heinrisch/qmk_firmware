@@ -66,6 +66,7 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC_XOX   KC_TRNS
 #define KC_XXXXX KC_NO
 #define KC_XP    XP
+#define KC_MEHH  MEH
 #define KC_TG    TG
 #define KC_MO    MO
 #define KC_TO    TO
@@ -127,11 +128,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-  MEH(KC_A),MEH(KC_B),MEH(KC_C),MEH(KC_D),MEH(KC_E),MEH(KC_F),    LBRC, MEH(KC_G),   UP,   MINS,   EQL,  RBRC,\
+  MEHH(KC_A),MEHH(KC_B),MEHH(KC_C),MEHH(KC_D),MEHH(KC_E),MEHH(KC_F),    LBRC, MEHH(KC_G),   UP,   MINS,   EQL,  RBRC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
         XOX,   XOX,_VOLUP,  MPLY,   XOX,   XOX,                   LPRN,  LEFT,  DOWN, RIGHT,   XOX,  RPRN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-        XOX,   XOX,_VOLDOWN,_MUTE,  XOX,   XOX,                   LABK,LCA(KC_LEFT),XOX,LCA(KC_RIGHT),  MEH(KC_H),  RABK,\
+        XOX,   XOX,_VOLDOWN,_MUTE,  XOX,   XOX,                   LABK,LCA(KC_LEFT),XOX,LCA(KC_RIGHT),  MEHH(KC_H),  RABK,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                  MO(_ADJUST),   XOX,   XOX,     XOX,   XOX,   XOX  \
                               //`--------------------'  `--------------------'
